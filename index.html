@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Strong Password & Passphrase Generator – 100% Offline & Secure</title>
+  <meta name="description" content="Generate cryptographically strong random passwords or memorable word passphrases locally in your browser using Web Crypto API. Zero tracking, never sent over the internet.">
+  <meta name="keywords" content="password generator, strong password generator, passphrase generator, random password, secure password maker">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://tgsofts.github.io/password-generator/">
+  <style>
+    :root { --bg: #f8fafc; --surface: #ffffff; --text: #0f172a; --muted: #64748b; --primary: #2563eb; --primary-hover: #1d4ed8; --success: #10b981; --warning: #f59e0b; --danger: #ef4444; --border: #e2e8f0; --radius: 12px; --shadow: 0 4px 20px rgba(15, 23, 42, 0.06); }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    body { background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; }
+    .container { max-width: 780px; margin: 0 auto; }
+    .top-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-size: 13.5px; flex-wrap: wrap; gap: 10px; }
+    .brand { font-weight: 800; color: var(--text); text-decoration: none; font-size: 15px; }
+    .nav-links { display: flex; gap: 8px; flex-wrap: wrap; }
+    .nav-links a { color: var(--primary); text-decoration: none; font-weight: 600; background: #eff6ff; padding: 5px 12px; border-radius: 999px; font-size: 12.5px; }
+    header { text-align: center; margin-bottom: 24px; }
+    h1 { font-size: 2.05rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 6px; }
+    header p { color: var(--muted); font-size: 1.02rem; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); margin-bottom: 22px; }
+    .tabs { display: flex; gap: 8px; margin-bottom: 18px; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
+    .tab-btn { padding: 8px 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); font-weight: 700; font-size: 13.5px; cursor: pointer; }
+    .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .output-box { display: flex; gap: 10px; align-items: center; background: #f1f5f9; border: 2px solid var(--border); border-radius: 10px; padding: 12px 14px; margin-bottom: 12px; }
+    .pw-display { flex: 1; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 1.25rem; font-weight: 700; word-break: break-all; color: var(--text); }
+    .btn { padding: 9px 15px; border-radius: 8px; font-size: 13.5px; font-weight: 700; cursor: pointer; border: 1px solid var(--border); background: var(--surface); transition: all 0.15s; }
+    .btn-primary { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-success { background: var(--success) !important; color: #fff !important; border-color: var(--success) !important; }
+    .strength-row { display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+    .meter { height: 8px; background: #e2e8f0; border-radius: 999px; overflow: hidden; margin-bottom: 20px; }
+    .meter-fill { height: 100%; width: 100%; background: var(--success); transition: width 0.25s, background 0.25s; }
+    .control-row { margin-bottom: 16px; }
+    .control-row label { display: flex; justify-content: space-between; font-weight: 700; font-size: 14px; margin-bottom: 6px; }
+    input[type="range"] { width: 100%; accent-color: var(--primary); cursor: pointer; }
+    .checks { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+    @media (max-width: 520px) { .checks { grid-template-columns: 1fr; } h1 { font-size: 1.6rem; } }
+    .check-item { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; cursor: pointer; }
+    .check-item input { width: 17px; height: 17px; accent-color: var(--primary); }
+    .seo-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); }
+    .seo-box h2 { font-size: 1.2rem; margin-bottom: 8px; }
+    .seo-box p { color: var(--muted); font-size: 0.93rem; }
+    footer { text-align: center; margin-top: 26px; font-size: 13.5px; color: var(--muted); }
+    footer a { color: var(--primary); text-decoration: none; font-weight: 600; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <nav class="top-nav">
+    <a href="https://tgsofts.github.io/" class="brand">TgSofts Utilities</a>
+    <div class="nav-links">
+      <a href="https://tgsofts.github.io/ai-text-cleaner/">AI Text Cleaner</a>
+      <a href="https://tgsofts.github.io/qr-generator/">QR Generator</a>
+      <a href="https://tgsofts.github.io/json-formatter/">JSON Formatter</a>
+    </div>
+  </nav>
+  <header>
+    <h1>Strong Password & Passphrase Generator</h1>
+    <p>Generate unbreakable passwords locally using your browser's cryptographic engine. Zero server logs, 100% private.</p>
+  </header>
+  <div class="card">
+    <div class="tabs">
+      <button class="tab-btn active" id="tabRandom" onclick="setMode('random')">Random Password</button>
+      <button class="tab-btn" id="tabPhrase" onclick="setMode('phrase')">Memorable Passphrase</button>
+    </div>
+    <div class="output-box">
+      <div class="pw-display" id="pwDisplay">Loading...</div>
+      <button class="btn" onclick="generate()" title="Regenerate">&#x21bb;</button>
+      <button class="btn btn-primary" id="copyBtn" onclick="copyPw()">Copy</button>
+    </div>
+    <div class="strength-row">
+      <span id="strengthLabel">Strength: Very Strong</span>
+      <span id="entropyLabel">~104 bits of entropy</span>
+    </div>
+    <div class="meter"><div class="meter-fill" id="meterFill"></div></div>
+
+    <div id="randomControls">
+      <div class="control-row">
+        <label><span>Password Length</span><span id="lenVal">16</span></label>
+        <input type="range" id="lenRange" min="8" max="64" value="16" oninput="document.getElementById('lenVal').textContent=this.value;generate()">
+      </div>
+      <div class="checks">
+        <label class="check-item"><input type="checkbox" id="chkUpper" checked onchange="generate()"> Uppercase (A-Z)</label>
+        <label class="check-item"><input type="checkbox" id="chkLower" checked onchange="generate()"> Lowercase (a-z)</label>
+        <label class="check-item"><input type="checkbox" id="chkNum" checked onchange="generate()"> Numbers (0-9)</label>
+        <label class="check-item"><input type="checkbox" id="chkSym" checked onchange="generate()"> Symbols (!@#$%^&*)</label>
+      </div>
+    </div>
+
+    <div id="phraseControls" style="display:none;">
+      <div class="control-row">
+        <label><span>Number of Words</span><span id="wordVal">4</span></label>
+        <input type="range" id="wordRange" min="3" max="8" value="4" oninput="document.getElementById('wordVal').textContent=this.value;generate()">
+      </div>
+      <div class="checks">
+        <label class="check-item"><input type="checkbox" id="chkCap" checked onchange="generate()"> Capitalize Words</label>
+        <label class="check-item"><input type="checkbox" id="chkPhraseNum" checked onchange="generate()"> Include a Number</label>
+      </div>
+    </div>
+  </div>
+  <section class="seo-box">
+    <h2>Why Client-Side Generation Matters</h2>
+    <p>This generator uses <code>window.crypto.getRandomValues()</code> directly inside your browser rather than predictable math functions or cloud servers. Your generated passwords exist only on your screen.</p>
+  </section>
+  <footer>Built by <a href="https://tgsofts.github.io/">TgSofts</a> &bull; Free Security & Productivity Utilities</footer>
+</div>
+<script>
+  let mode = 'random';
+  const words = ["anchor","breeze","cactus","dolphin","ember","falcon","glacier","harbor","island","jungle","lantern","meadow","nebula","oasis","panther","quartz","river","summit","thunder","utopia","velvet","whisper","zephyr","amber","beacon","canyon","diamond","eclipse","forest","granite","horizon","ivory","jasper","kingdom","lagoon","monarch","nectar","oracle","phoenix","rainbow","sapphire","tornado","universe","voyager","wildfire","zenith"];
+
+  function randInt(max) {
+    const arr = new Uint32Array(1);
+    window.crypto.getRandomValues(arr);
+    return arr[0] % max;
+  }
+
+  function setMode(m) {
+    mode = m;
+    document.getElementById('tabRandom').classList.toggle('active', m === 'random');
+    document.getElementById('tabPhrase').classList.toggle('active', m === 'phrase');
+    document.getElementById('randomControls').style.display = m === 'random' ? 'block' : 'none';
+    document.getElementById('phraseControls').style.display = m === 'phrase' ? 'block' : 'none';
+    generate();
+  }
+
+  function updateStrength(bits) {
+    const lbl = document.getElementById('strengthLabel');
+    const ent = document.getElementById('entropyLabel');
+    const fill = document.getElementById('meterFill');
+    ent.textContent = `~${Math.round(bits)} bits of entropy`;
+    if (bits < 50) {
+      lbl.textContent = 'Strength: Weak'; fill.style.width = '30%'; fill.style.background = 'var(--danger)';
+    } else if (bits < 75) {
+      lbl.textContent = 'Strength: Good'; fill.style.width = '65%'; fill.style.background = 'var(--warning)';
+    } else {
+      lbl.textContent = 'Strength: Very Strong'; fill.style.width = '100%'; fill.style.background = 'var(--success)';
+    }
+  }
+
+  function generate() {
+    if (mode === 'random') {
+      const len = parseInt(document.getElementById('lenRange').value, 10);
+      let pool = '';
+      if (document.getElementById('chkUpper').checked) pool += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      if (document.getElementById('chkLower').checked) pool += 'abcdefghijklmnopqrstuvwxyz';
+      if (document.getElementById('chkNum').checked) pool += '0123456789';
+      if (document.getElementById('chkSym').checked) pool += '!@#$%^&*()-_=+[]{}|;:,.<>?';
+      if (!pool) { document.getElementById('chkLower').checked = true; pool = 'abcdefghijklmnopqrstuvwxyz'; }
+      let pw = '';
+      for (let i = 0; i < len; i++) pw += pool[randInt(pool.length)];
+      document.getElementById('pwDisplay').textContent = pw;
+      updateStrength(len * Math.log2(pool.length));
+    } else {
+      const count = parseInt(document.getElementById('wordRange').value, 10);
+      const cap = document.getElementById('chkCap').checked;
+      const addNum = document.getElementById('chkPhraseNum').checked;
+      let picked = [];
+      for (let i = 0; i < count; i++) {
+        let w = words[randInt(words.length)];
+        if (cap) w = w.charAt(0).toUpperCase() + w.slice(1);
+        picked.push(w);
+      }
+      if (addNum) picked[randInt(picked.length)] += randInt(100);
+      document.getElementById('pwDisplay').textContent = picked.join('-');
+      updateStrength(count * Math.log2(words.length) + (addNum ? 6.6 : 0));
+    }
+  }
+
+  function copyPw() {
+    const text = document.getElementById('pwDisplay').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.getElementById('copyBtn');
+      btn.textContent = 'Copied!';
+      btn.classList.add('btn-success');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('btn-success'); }, 1500);
+    });
+  }
+
+  generate();
+</script>
+</body>
+</html>
